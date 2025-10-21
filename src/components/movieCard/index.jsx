@@ -62,7 +62,7 @@ export default function MovieCard({ movie, action }) {
           <Grid size={{ xs: 6 }}>
             <Typography variant="h6" component="p">
               <CalendarIcon fontSize="small" />
-              {movie.release_date}
+              {(movie.release_date).split("-").reverse().join("-")}
             </Typography>
           </Grid>
           <Grid size={{ xs: 6 }}>
