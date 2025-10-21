@@ -13,6 +13,15 @@ const TrendingPage = (props) => {
     queryFn: getMovies,
   })
 
+    /*const getTrendingMovies = useQueries({
+    queries: movieIds.map((movieId) => {
+      return {
+        queryKey: ['movie', { id: movieId }],
+        queryFn: getMovie,
+      }
+    })
+  });*/
+
   if (isPending) {
     return <Spinner />
   }
