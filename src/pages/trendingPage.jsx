@@ -6,10 +6,10 @@ import Spinner from '../components/spinner';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites';
 
 
-const trendingPage = (props) => {
+const TrendingPage = (props) => {
 
   const { data, error, isPending, isError } = useQuery({
-    queryKey: ['discover'],
+    queryKey: ['trending'],
     queryFn: getMovies,
   })
 
@@ -40,4 +40,4 @@ const trendingPage = (props) => {
 
 };
 
-export default trendingPage;
+export default TrendingPage;
