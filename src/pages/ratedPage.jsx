@@ -4,14 +4,14 @@ import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../components/spinner';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites';
-import { getTrendingMovies } from "../api/tmdb-api";
+import { getRatedMovies } from "../api/tmdb-api";
 
 
-const TrendingPage = (props) => {
+const RatedPage = (props) => {
 
     const { data, error, isPending, isError } = useQuery({
-        queryKey: ['discover'],
-        queryFn: getTrendingMovies,
+        queryKey: ['rated'],
+        queryFn: getRatedMovies,
       })
   if (isPending) {
     return <Spinner />
@@ -30,7 +30,7 @@ const TrendingPage = (props) => {
 
   return (
     <PageTemplate
-      title="Trending Movies"
+      title="Top Rated Movies"
       movies={movies}
       action={(movie) => {
         return <AddToFavoritesIcon movie={movie} />
@@ -40,6 +40,4 @@ const TrendingPage = (props) => {
 
 };
 
-export default TrendingPage;
-
-// testing github
+export default RatedPage;

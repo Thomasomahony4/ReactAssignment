@@ -10,7 +10,7 @@ import { getTrendingMovies } from "../api/tmdb-api";
 const TrendingPage = (props) => {
 
     const { data, error, isPending, isError } = useQuery({
-        queryKey: ['discover'],
+        queryKey: ['trending'],
         queryFn: getTrendingMovies,
       })
   if (isPending) {
@@ -41,5 +41,3 @@ const TrendingPage = (props) => {
 };
 
 export default TrendingPage;
-
-// testing github
