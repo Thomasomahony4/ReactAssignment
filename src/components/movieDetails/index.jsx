@@ -77,7 +77,6 @@ const MovieDetails = ({ movie }) => {  // Don't miss this!
       <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <MovieReviews movie={movie} />
       </Drawer>
-
     </>
   );
 };

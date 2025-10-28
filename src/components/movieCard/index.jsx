@@ -44,7 +44,7 @@ export default function MovieCard({ movie, action }) {
         }
         title={
           <Typography variant="h5" component="p">
-            {movie.title}{" "}
+            {movie.title}
           </Typography>
         }
       />
@@ -78,8 +78,14 @@ export default function MovieCard({ movie, action }) {
         {action(movie)}
       
         <Link to={`/movies/${movie.id}`}>
-          <Button variant="outlined" size="medium" color="primary">
+          <Button variant="outlined" size="small" color="primary">
             More Info ...
+          </Button>
+        </Link>
+
+        <Link to={`/movies/${movie.id}/credits`}>
+          <Button variant="outlined" size="small" color="primary">
+            Credits ...
           </Button>
         </Link>
         
