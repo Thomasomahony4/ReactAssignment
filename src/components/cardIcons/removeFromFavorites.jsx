@@ -15,7 +15,7 @@ const RemoveFromFavoritesIcon = ({ movie }) => {
       aria-label="remove from favorites"
       onClick={handleRemoveFromFavorites}
     >
-      <DeleteIcon color="primary" fontSize="large" />
+      <DeleteIcon color="#cf2d2d" fontSize="large" />
     </IconButton>
   );
 };
