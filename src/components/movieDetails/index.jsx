@@ -1,86 +1,85 @@
 import React, { useState } from "react";
-import Chip from "@mui/material/Chip"; // MUI Chip component for small info labels
-import Paper from "@mui/material/Paper"; // Paper container for grouping Chips
-import AccessTimeIcon from "@mui/icons-material/AccessTime"; // Icon for runtime
-import MonetizationIcon from "@mui/icons-material/MonetizationOn"; // Icon for revenue
-import StarRate from "@mui/icons-material/StarRate"; // Icon for ratings
-import NavigationIcon from "@mui/icons-material/Navigation"; // Icon for FAB button
-import Fab from "@mui/material/Fab"; // Floating Action Button
-import Typography from "@mui/material/Typography"; // Text component
-import Drawer from "@mui/material/Drawer"; // Slide-in panel
-import MovieReviews from "../movieReviews" // Component to show movie reviews
+import Chip from "@mui/material/Chip"; // Material UI component for small labeled items
+import Paper from "@mui/material/Paper"; // Material UI container with paper effect
+import AccessTimeIcon from "@mui/icons-material/AccessTime"; // Icon to represent runtime
+import MonetizationIcon from "@mui/icons-material/MonetizationOn"; // Icon to represent revenue
+import StarRate from "@mui/icons-material/StarRate"; // Icon to represent rating
+import NavigationIcon from "@mui/icons-material/Navigation"; // Icon for reviews button
+import Fab from "@mui/material/Fab"; // Floating action button
+import Typography from "@mui/material/Typography"; // Typography component for text
+import Drawer from "@mui/material/Drawer"; // Slide-out drawer component
+import MovieReviews from "../movieReviews" // Component to display movie reviews
 
-
+// Styles for Paper component containing Chips
 const root = {
-  display: "flex",           // Flex layout for chips
-  justifyContent: "center",  // Center align chips
-  flexWrap: "wrap",          // Wrap to next line if needed
-  listStyle: "none",         // Remove default list styling
-  padding: 1.5,              // Inner spacing
-  margin: 0,                 // Remove default margin
+  display: "flex",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  listStyle: "none",
+  padding: 1.5,
+  margin: 0,
 };
 
-const chip = { margin: 0.5 }; // Spacing between individual chips
+// Styles for individual Chips
+const chip = { margin: 0.5 };
 
-const MovieDetails = ({ movie }) => {  // Component receives movie object as prop
-  const [drawerOpen, setDrawerOpen] = useState(false); // State to toggle Drawer
+// MovieDetails component receives a movie object as a prop
+const MovieDetails = ({ movie }) => {
+  const [drawerOpen, setDrawerOpen] = useState(false); // State to open/close reviews drawer
 
   return (
     <>
-      {/* Overview section */}
+      {/* Movie Overview Section */}
       <Typography variant="h5" component="h3">
         Overview
       </Typography>
 
       <Typography variant="h6" component="p">
-        {movie.overview} {/* Display movie overview text */}
+        {movie.overview} {/* Display movie overview */}
       </Typography>
 
-      {/* Genres section */}
-      <Paper
-        component="ul"
-        sx={{ ...root }}
-      >
+      {/* Genres Section */}
+      <Paper component="ul" sx={{ ...root }}>
         <li>
-          <Chip label="Genres" sx={{ ...chip }} color="primary" /> {/* Static label */}
+          <Chip label="Genres" sx={{ ...chip }} color="primary" /> {/* Label for genres */}
         </li>
         {movie.genres.map((g) => (
           <li key={g.name}>
-            <Chip label={g.name} sx={{ ...chip }} /> {/* Render each genre */}
+            <Chip label={g.name} sx={{ ...chip }} /> {/* Display each genre */}
           </li>
         ))}
       </Paper>
 
-      {/* Movie stats section */}
+      {/* Movie Details Section using Chips */}
       <Paper component="ul" sx={{ ...root }}>
         <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} /> {/* Runtime */}
         <Chip
           icon={<MonetizationIcon />}
-          label={`${movie.revenue.toLocaleString()}`} /* Revenue formatted with commas */
+          label={`${movie.revenue.toLocaleString()}`}
         />
         <Chip
           icon={<StarRate />}
-          label={`${movie.vote_average} (${movie.vote_count})`} {/* Average rating and vote count */}
+          label={`${movie.vote_average} (${movie.vote_count})`}
         />
         <Chip label={`Released: ${movie.release_date}`} /> {/* Release date */}
       </Paper>
 
-      {/* Floating Action Button to open reviews */}
+      {/* Floating Action Button to open Reviews Drawer */}
       <Fab
         color="primary"
         variant="extended"
-        onClick={() => setDrawerOpen(true)} // Opens the Drawer
+        onClick={() => setDrawerOpen(true)}
         sx={{
           position: 'fixed',
           bottom: '1em',
           right: '1em'
         }}
       >
-        <NavigationIcon /> {/* Icon inside FAB */}
-        Reviews {/* Label */}
+        <NavigationIcon />
+        Reviews
       </Fab>
 
-      {/* Drawer showing reviews */}
+      {/* Drawer containing MovieReviews component */}
       <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <MovieReviews movie={movie} /> {/* Pass movie to reviews component */}
       </Drawer>
