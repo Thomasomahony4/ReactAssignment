@@ -1,16 +1,40 @@
 import React from "react";
-import { useLocation } from "react-router";
+import { useParams } from 'react-router';
+import MovieCredits from "../components/movieCredits/";
 import PageTemplate from "../components/templateMoviePage";
-import MovieReview from "../components/movieCredits";
+import { getMovieCredits } from '../api/tmdb-api'
+import { useQuery } from '@tanstack/react-query';
+import Spinner from '../components/spinner'
+
 
 const MovieCreditsPage = (props) => {
-  let location = useLocation();
-  const {movie, credits} = location.state;
-  
+  const { id } = useParams();
+
+  const { data: credits, error, isPending, isError } = useQuery({
+  queryKey: ["credits", { id }],
+  queryFn: getMovieCredits,
+});
+
+  if (isPending) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <h1>{error.message}</h1>;
+  }
+
   return (
-    <PageTemplate movie={movie}>
-      <MovieReview credits={credits} />
-    </PageTemplate>
+    <>
+      {credits ? (
+        <>
+          <PageTemplate credits={credits}>
+            <MovieCredits credits={credits} />
+          </PageTemplate>
+        </>
+      ) : (
+        <p>Waiting for movie credits</p>
+      )}
+    </>
   );
 };
 

@@ -150,7 +150,6 @@ export const getMovie = (args) => {
           throw new Error(error.status_message || "Something went wrong");
         });
       }
-      console.log("Credits data:", credits);
       return response.json();
     })
     .catch((error) => {
