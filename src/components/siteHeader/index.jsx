@@ -1,28 +1,30 @@
 import React, { useState } from "react";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import Button from "@mui/material/Button";
-import MenuIcon from "@mui/icons-material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
-import { useNavigate } from "react-router";
-import { styled } from '@mui/material/styles';
-import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import AppBar from "@mui/material/AppBar"; // Material-UI top navigation bar
+import Toolbar from "@mui/material/Toolbar"; // Container for AppBar content
+import Typography from "@mui/material/Typography"; // For text headings
+import IconButton from "@mui/material/IconButton"; // Button for menu icon
+import Button from "@mui/material/Button"; // Standard button
+import MenuIcon from "@mui/icons-material/Menu"; // Hamburger menu icon
+import MenuItem from "@mui/material/MenuItem"; // Single item in dropdown menu
+import Menu from "@mui/material/Menu"; // Dropdown menu container
+import { useNavigate } from "react-router"; // Hook for programmatic navigation
+import { styled } from '@mui/material/styles'; // For custom styling
+import { useTheme } from "@mui/material/styles"; // Access MUI theme
+import useMediaQuery from "@mui/material/useMediaQuery"; // Detect screen size
 
+// Offset div to prevent content from being hidden behind fixed AppBar
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 const SiteHeader = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  const [anchorEl, setAnchorEl] = useState(null); // Tracks the anchor element for the menu
+  const open = Boolean(anchorEl); // Boolean to check if menu is open
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const theme = useTheme(); // Access MUI theme
+  const isMobile = useMediaQuery(theme.breakpoints.down("md")); // Check if screen is mobile size
   
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Hook to navigate programmatically
 
+  // Define the navigation menu options
   const menuOptions = [
     { label: "Home", path: "/" },
     { label: "Favorites", path: "/movies/favorites" },
@@ -31,11 +33,13 @@ const SiteHeader = () => {
     { label: "Upcoming", path: "/movies/upcoming" },
   ];
 
+  // Function to handle menu item selection
   const handleMenuSelect = (pageURL) => {
-    setAnchorEl(null);
-    navigate(pageURL);
+    setAnchorEl(null); // Close menu
+    navigate(pageURL); // Navigate to selected page
   };
 
+  // Function to open the menu on mobile
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -44,60 +48,69 @@ const SiteHeader = () => {
     <>
       <AppBar position="fixed" color="primary">
         <Toolbar>
+          {/* Application title */}
           <Typography variant="h4" sx={{ flexGrow: 1 }}>
             TMDB Client
           </Typography>
-            {isMobile ? (
-              <>
-                <IconButton
-                  aria-label="menu"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
-                  onClick={handleMenu}
-                  color="inherit"
-                >
-                  <MenuIcon />
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={open}
-                  onClose={() => setAnchorEl(null)}
-                >
-                  {menuOptions.map((opt) => (
-                    <MenuItem
-                      key={opt.label}
-                      onClick={() => handleMenuSelect(opt.path)}
-                    >
-                      {opt.label}
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </>
-            ) : (
-              <>
+
+          {/* Conditional rendering based on screen size */}
+          {isMobile ? (
+            <>
+              {/* Mobile menu icon button */}
+              <IconButton
+                aria-label="menu"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+
+              {/* Dropdown menu for mobile */}
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={open}
+                onClose={() => setAnchorEl(null)}
+              >
+                {/* Map each menu option to a MenuItem */}
                 {menuOptions.map((opt) => (
-                  <Button
+                  <MenuItem
                     key={opt.label}
-                    color="inherit"
                     onClick={() => handleMenuSelect(opt.path)}
                   >
                     {opt.label}
-                  </Button>
+                  </MenuItem>
                 ))}
-              </>
-            )}
+              </Menu>
+            </>
+          ) : (
+            <>
+              {/* Desktop: show buttons directly */}
+              {menuOptions.map((opt) => (
+                <Button
+                  key={opt.label}
+                  color="inherit"
+                  onClick={() => handleMenuSelect(opt.path)}
+                >
+                  {opt.label}
+                </Button>
+              ))}
+            </>
+          )}
         </Toolbar>
       </AppBar>
+      {/* Spacer to offset fixed AppBar */}
       <Offset />
     </>
   );
