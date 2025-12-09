@@ -1,10 +1,26 @@
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react';
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import {getTasks, addTask, deleteTask, updateTask} from "./api/tasky-api";
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [ taskState, setTaskState ] = useState({tasks: []});
+
+useEffect(() => {
+    getTasks().then(tasks => {
+      setTaskState({tasks: tasks});
+    });
+  }, []);	
+
+  
+    const [ formState, setFormState ] = useState({
+    title: "",
+    description: "",
+    deadline: "",
+    priority: "Low"
+  });
 
   return (
     <>
